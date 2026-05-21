@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tamil Nadu Elections 2026</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="logo">Tamil Nadu Elections <span>2026</span></div>
+  <div class="tally" id="tally">
+    <span style="font-size:12px;color:var(--muted)">Loading…</span>
+  </div>
+</header>
+
+<div class="body-row">
+
+  <div id="map-wrap">
+    <svg id="map"></svg>
+
+    <div class="map-btns">
+      <button class="map-btn" id="btn-in"  title="Zoom in">+</button>
+      <button class="map-btn" id="btn-out" title="Zoom out">−</button>
+      <button class="map-btn" id="btn-rst" title="Reset" style="font-size:12px">⌂</button>
+    </div>
+
+    <div class="legend" id="legend" style="display:none"></div>
+  </div>
+
+  <div id="panel" class="closed">
+    <div id="panel-inner"></div>
+  </div>
+
+</div>
+
+<div id="tip"></div>
+
+<script type="module">
+  import { fetchConstituencies, fetchSummary } from "/js/api.js";
+  import { initMap, filterByParty }            from "/js/map.js";
+
+  async function boot() {
+    try {
+      // Load GeoJSON + API data in parallel
+      const [geoJson, constituencies, summary] = await Promise.all([
+        d3.json("/data/tn_ac_2021.geojson"),
+        fetchConstituencies(),
+        fetchSummary(),
+      ]);
+
+      initMap(geoJson, constituencies);
+      buildTally(summary);
+      buildLegend(summary);
+
+    } catch (err) {
+      console.error(err);
+      document.getElementById("tally").innerHTML =
+        `<span style="color:#cc0018;font-size:12px">⚠ Failed to load: ${err.message}</span>`;
+    }
+  }
+
+  function buildTally(summary) {
+    document.getElementById("tally").innerHTML = summary
+      .filter(p => p.seats_won > 0)
+      .map(p => `
+        <div class="chip" onclick="window._filterParty('${p.abbreviation}')" title="${p.full_name}">
+          <div class="chip-dot" style="background:${p.color_hex}"></div>
+          <span>${p.abbreviation}</span>
+          <span class="chip-n">${p.seats_won}</span>
+        </div>`)
+      .join("");
+  }
+
+  function buildLegend(summary) {
+    const leg = document.getElementById("legend");
+    leg.style.display = "block";
+    leg.innerHTML = `<div class="leg-title">Seats won — click to filter</div>` +
+      summary
+        .filter(p => p.seats_won > 0)
+        .map(p => `
+          <div class="leg-row" data-party="${p.abbreviation}"
+               onclick="window._filterParty('${p.abbreviation}')">
+            <div class="leg-swatch" style="background:${p.color_hex}"></div>
+            <div class="leg-name">${p.abbreviation}</div>
+            <div class="leg-count">${p.seats_won}</div>
+          </div>`)
+        .join("");
+  }
+
+  // Expose filter to onclick (avoids module scope issues)
+  window._filterParty = (abbr) => filterByParty(abbr);
+
+  boot();
+</script>
+
+</body>
+</html>
