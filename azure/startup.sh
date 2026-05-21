@@ -3,15 +3,11 @@
 # Set in: App Service → Configuration → General Settings → Startup Command:
 #   bash azure/startup.sh
 #
-# Azure provides $PORT; default to 8000 for local runs.
+# Dependencies are installed by Oryx at deploy time (SCM_DO_BUILD_DURING_DEPLOYMENT=true),
+# which activates antenv before invoking this script. Do NOT pip install here — that
+# would re-run on every cold start and trip App Service's 230s startup probe.
 set -euo pipefail
 
-APP_ROOT="${APP_ROOT:-/home/site/wwwroot}"
-cd "$APP_ROOT"
-
-python -m pip install --upgrade pip
-python -m pip install -r backend/requirements.txt
-
-cd backend
+cd "${APP_ROOT:-/home/site/wwwroot}/backend"
 exec python -m uvicorn main:app --host 0.0.0.0 --port "${PORT:-8000}"
 
