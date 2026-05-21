@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: REPLACE_WITH_YOUR_APP_NAME      # e.g. tn-elections-2026
+  AZURE_WEBAPP_NAME: tn-elections-2026      # e.g. tn-elections-2026
   PYTHON_VERSION: "3.12"
 
 jobs:
