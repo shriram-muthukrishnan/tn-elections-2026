@@ -24,3 +24,17 @@ export async function fetchParties() {
   if (!r.ok) throw new Error("Failed to load parties");
   return r.json();
 }
+
+export async function sendChat(messages) {
+  const r = await fetch(`${BASE}/api/chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages: messages.slice(-10) }),
+  });
+  if (!r.ok) {
+    let detail = `HTTP ${r.status}`;
+    try { detail = (await r.json()).detail || detail; } catch {}
+    throw new Error(detail);
+  }
+  return r.json();
+}

@@ -2,7 +2,7 @@
 
 Interactive map of Tamil Nadu's 234 assembly constituencies — party-wise results, vote shares, and per-constituency candidate breakdowns.
 
-**Live**: <https://REPLACE_WITH_YOUR_APP.azurewebsites.net>
+**Live**: <https://tn-elections-2026.azurewebsites.net>
 
 ## Features
 - **See who won, at a glance.** Every constituency on the map is colored by its winning party, so you get the statewide picture in one view.
@@ -44,26 +44,6 @@ The GeoJSON file is expected at `frontend/data/tn_ac_2021.geojson`.
 
 ## Data
 Constituency results sourced from the Election Commission of India (<https://results.eci.gov.in>).
-
-## License
-MIT
-
-
-## Run locally
-
-```bash
-cd backend
-python3 -m venv .venv
-source .venv/bin/activate          # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-
-cp .env.example .env                # then edit .env with your DATABASE_URL
-
-uvicorn main:app --reload --port 8000
-```
-Open <http://localhost:8000>.
-
-The GeoJSON file is expected at `frontend/data/tn_ac_2021.geojson`.
 
 ## API
 

@@ -41,6 +41,7 @@
 <script type="module">
   import { fetchConstituencies, fetchSummary } from "/js/api.js";
   import { initMap, filterByParty }            from "/js/map.js";
+  import { initChat }                          from "/js/chat.js";
 
   async function boot() {
     try {
@@ -54,6 +55,7 @@
       initMap(geoJson, constituencies);
       buildTally(summary);
       buildLegend(summary);
+      initChat();
 
     } catch (err) {
       console.error(err);
