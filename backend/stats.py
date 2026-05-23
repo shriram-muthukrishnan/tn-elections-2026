@@ -308,6 +308,24 @@ def warm_stats(db: Session) -> None:
         region_contested[region][abbr] = region_contested[region].get(abbr, 0) + 1
 
     region_keys = set(region_won) | set(region_contested)
+
+    # Per-region winner roster: every constituency in the region with its winner.
+    region_winners: dict[str, list[dict]] = {}
+    for c in consts:
+        region = _region_for(_district_for(c))
+        if not region:
+            continue
+        region_winners.setdefault(region, []).append({
+            "const_no": c.const_no,
+            "name":     c.name,
+            "district": _district_for(c),
+            "winner":   c.winning_candidate,
+            "party":    c.winning_party.abbreviation if c.winning_party else None,
+            "margin":   c.winning_margin,
+        })
+    for region in region_winners:
+        region_winners[region].sort(key=lambda r: r["const_no"] or 0)
+
     s["regions"] = sorted(
         [
             {
@@ -331,6 +349,7 @@ def warm_stats(db: Session) -> None:
                     ],
                     key=lambda x: (-x["won"], -x["strike_rate_pct"]),
                 )[:15],
+                "constituencies": region_winners.get(region, []),
             }
             for region in region_keys
         ],
@@ -338,27 +357,40 @@ def warm_stats(db: Session) -> None:
     )
 
     # --- District breakdown: same shape, smaller buckets ---
-    district_party: dict[str, dict[str, int]] = {}
+    district_party:   dict[str, dict[str, int]] = {}
+    district_winners: dict[str, list[dict]]     = {}
     for c in consts:
         district = _district_for(c)
-        if not district or not c.winning_party:
+        if not district:
             continue
         d = district.title()
-        abbr = c.winning_party.abbreviation
-        district_party.setdefault(d, {})
-        district_party[d][abbr] = district_party[d].get(abbr, 0) + 1
+        if c.winning_party:
+            abbr = c.winning_party.abbreviation
+            district_party.setdefault(d, {})
+            district_party[d][abbr] = district_party[d].get(abbr, 0) + 1
+        district_winners.setdefault(d, []).append({
+            "const_no": c.const_no,
+            "name":     c.name,
+            "winner":   c.winning_candidate,
+            "party":    c.winning_party.abbreviation if c.winning_party else None,
+            "margin":   c.winning_margin,
+        })
+    for d in district_winners:
+        district_winners[d].sort(key=lambda r: r["const_no"] or 0)
+
     s["districts"] = sorted(
         [
             {
-                "district":    d,
-                "region":      _region_for(d),
-                "total_seats": sum(parties.values()),
-                "party_seats": sorted(
-                    [{"party": p, "seats": n} for p, n in parties.items()],
+                "district":       d,
+                "region":         _region_for(d),
+                "total_seats":    sum(district_party.get(d, {}).values()),
+                "party_seats":    sorted(
+                    [{"party": p, "seats": n} for p, n in district_party.get(d, {}).items()],
                     key=lambda x: -x["seats"],
                 ),
+                "constituencies": district_winners.get(d, []),
             }
-            for d, parties in district_party.items()
+            for d in district_winners.keys()
         ],
         key=lambda x: (x.get("region") or "ZZ", -x["total_seats"]),
     )

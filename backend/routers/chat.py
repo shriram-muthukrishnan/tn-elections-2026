@@ -1,5 +1,6 @@
 import os, re, json, time, logging
 from collections import defaultdict, deque
+from difflib import get_close_matches
 from typing import List, Optional, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Request
@@ -122,11 +123,28 @@ def _extract_entities(text: str) -> tuple[set[int], set[str]]:
             const_nos.add(n)
 
     # Constituency names — normalize both sides, longest-first so
-    # "coimbatoresouth" beats "coimbatore".
+    # "coimbatoresouth" beats "coimbatore". Also scan alias-rewritten
+    # variants of the text so nicknames ("tuticorin", "ooty", "tnagar")
+    # surface their official-spelling counterparts without needing the LLM.
     normalized_text = _norm(text)
-    for name in sorted(_CONST_INDEX, key=len, reverse=True):
-        if name and name in normalized_text:
-            const_nos.add(_CONST_INDEX[name])
+    search_texts = {normalized_text}
+    for src, dst in _CONST_NAME_ALIASES:
+        if src in normalized_text:
+            search_texts.add(normalized_text.replace(src, dst))
+    sorted_names = sorted(_CONST_INDEX, key=len, reverse=True)
+    # Suppress overlapping shorter matches (e.g. "ATTUR" inside "AMBATTUR"):
+    # mask each matched span so a shorter name can't re-match the same chars.
+    for stext in search_texts:
+        buf = list(stext)
+        for name in sorted_names:
+            if not name:
+                continue
+            joined = "".join(buf)
+            idx = joined.find(name)
+            if idx >= 0:
+                const_nos.add(_CONST_INDEX[name])
+                for i in range(idx, idx + len(name)):
+                    buf[i] = " "
 
     # Candidate name tokens — e.g. "stalin", "palaniswami", "vijay".
     # Score each candidate by how many of the user's tokens hit their name,
@@ -198,6 +216,110 @@ def _llm_extract_entities(text: str) -> dict:
         log.exception("LLM entity extraction failed; falling back to regex extractor")
         return {}
 
+# Common nickname / colloquial spellings -> the spelling used in the DB names.
+# Each entry produces an ADDITIONAL candidate key; the original is also tried.
+# One-shot rewrites (no chaining), so adding more pairs is safe.
+# Targets are normalized (lowercase, alphanumerics only) so they substring-match
+# the DB names that have spaces / hyphens / dots (e.g. THIRU-VI-KA-NAGAR).
+_CONST_NAME_ALIASES = [
+    # Tiruchirappalli (#140 / #141)
+    ("trichy",          "tiruchirappalli"),
+    ("tiruchi",         "tiruchirappalli"),
+    ("thiruchirapalli", "tiruchirappalli"),
+    # Thoothukkudi / Tuticorin (#214)
+    ("tuticorin",       "thoothukkudi"),
+    ("tuticorn",        "thoothukkudi"),
+    ("thoothukudi",     "thoothukkudi"),
+    ("toothukudi",      "thoothukkudi"),
+    # Kanniyakumari (#229)
+    ("kanyakumari",     "kanniyakumari"),
+    # Viluppuram (#74)
+    ("villupuram",      "viluppuram"),
+    # Tiruppattur (#50 Vellore, #185 Sivaganga — both DB spellings)
+    ("tirupathur",      "tiruppattur"),
+    ("thiruppathur",    "tiruppattur"),
+    # Kancheepuram (#37)
+    ("kanchipuram",     "kancheepuram"),
+    # Tiruvallur (#4 THIRUVALLUR) and #185
+    ("tiruvallur",      "thiruvallur"),
+    # Tirunelveli (#224)
+    ("nellai",          "tirunelveli"),
+    ("thirunelveli",    "tirunelveli"),
+    # Udhagamandalam / Ooty (#108)
+    ("ooty",            "udhagamandalam"),
+    ("ootacamund",      "udhagamandalam"),
+    ("udagamandalam",   "udhagamandalam"),
+    # Thanjavur (#174)
+    ("tanjore",         "thanjavur"),
+    ("tanjavur",        "thanjavur"),
+    # Ramanathapuram (#211)
+    ("ramnad",          "ramanathapuram"),
+    ("ramnathapuram",   "ramanathapuram"),
+    # Pudukkottai (#180)
+    ("pudukottai",      "pudukkottai"),
+    # Thiruvarur (#168)
+    ("tiruvarur",       "thiruvarur"),
+    # Sivaganga (#186)
+    ("sivagangai",      "sivaganga"),
+    # Nagapattinam (#163)
+    ("nagapatnam",      "nagapattinam"),
+    # Mayiladuthurai / Mayavaram (#161)
+    ("mayavaram",       "mayiladuthurai"),
+    # Tiruvannamalai (#63)
+    ("thiruvannamalai", "tiruvannamalai"),
+    # Tiruppur (#113 / #114)
+    ("tirupur",         "tiruppur"),
+    ("tirupoor",        "tiruppur"),
+    # Mettuppalayam (#111)
+    ("mettupalayam",    "mettuppalayam"),
+    # Kovai / Coimbatore (#118 / #120)
+    ("kovai",           "coimbatore"),
+    ("covai",           "coimbatore"),
+    # Chengalpattu (#32)
+    ("chengalpet",      "chengalpattu"),
+    ("chingleput",      "chengalpattu"),
+    # Shozhinganallur (#27)
+    ("sholinganallur",  "shozhinganallur"),
+    ("solinganallur",   "shozhinganallur"),
+    # Chepauk-Thiruvallikeni (#19, DB: CHEPAUK-THIRUVALLIKENI) — rewrite to
+    # the full DB-normalized name so the substring scan picks up the seat.
+    ("chepak",          "chepaukthiruvallikeni"),
+    ("chepauk",         "chepaukthiruvallikeni"),
+    ("triplicane",      "chepaukthiruvallikeni"),
+    ("thiruvallikeni",  "chepaukthiruvallikeni"),
+    # Thiyagarayanagar / T. Nagar (#24)
+    ("tnagar",          "thiyagarayanagar"),
+    ("thyagarayanagar", "thiyagarayanagar"),
+    # Dr. Radhakrishnan Nagar / R.K. Nagar (#11)
+    ("rknagar",         "drradhakrishnannagar"),
+    ("radhakrishnannagar", "drradhakrishnannagar"),
+    # Thiru-Vi-Ka Nagar / TVK Nagar (#15)
+    ("tvknagar",        "thiruvikanagar"),
+    # Madavaram (#9)
+    ("madhavaram",      "madavaram"),
+    # Ambattur (#8)
+    ("ambathur",        "ambattur"),
+    # Thiruvottiyur (#10)
+    ("tiruvottiyur",    "thiruvottiyur"),
+    ("tiruvotriyur",    "thiruvottiyur"),
+    # Velachery (#26)
+    ("velacheri",       "velachery"),
+    # Nagercoil (#230)
+    ("nagarcoil",       "nagercoil"),
+    # Bodinayakanur (#200)
+    ("bodinayakkanur",  "bodinayakanur"),
+]
+
+def _alias_variants(key: str) -> list[str]:
+    """Return [key] plus any single-rewrite variants from the alias table.
+    Variants are produced independently (no chaining) so they stay predictable."""
+    variants = [key]
+    for src, dst in _CONST_NAME_ALIASES:
+        if src in key:
+            variants.append(key.replace(src, dst))
+    return variants
+
+
 def _resolve_extracted(extracted: dict) -> tuple[set[int], set[str]]:
     """Resolve LLM-extracted English strings to const_nos and party abbreviations
     using the in-memory indexes built at startup."""
@@ -217,14 +339,36 @@ def _resolve_extracted(extracted: dict) -> tuple[set[int], set[str]]:
         key = _norm(s)
         if not key:
             continue
-        if key in _CONST_INDEX:
-            const_nos.add(_CONST_INDEX[key])
-            continue
-        # Fallback: longest indexed name that is a substring (either way).
-        for name in sorted(_CONST_INDEX, key=len, reverse=True):
-            if name and (name in key or key in name):
-                const_nos.add(_CONST_INDEX[name])
+        matched = False
+        for candidate_key in _alias_variants(key):
+            if candidate_key in _CONST_INDEX:
+                const_nos.add(_CONST_INDEX[candidate_key])
+                matched = True
                 break
+        if matched:
+            continue
+        # Fallback 1: longest indexed name that is a substring of, or contains, any variant.
+        for candidate_key in _alias_variants(key):
+            hit = next(
+                (name for name in sorted(_CONST_INDEX, key=len, reverse=True)
+                 if name and (name in candidate_key or candidate_key in name)),
+                None,
+            )
+            if hit:
+                const_nos.add(_CONST_INDEX[hit])
+                matched = True
+                break
+        if matched:
+            continue
+        # Fallback 2: fuzzy match against indexed names (handles typos like
+        # "Kolatur" -> "Kolathur", "Coimbator" -> "Coimbatore"). Skip very
+        # short keys to avoid spurious matches like "east" -> "Egmore".
+        if len(key) >= 5:
+            for candidate_key in _alias_variants(key):
+                fuzzy = get_close_matches(candidate_key, _CONST_INDEX.keys(), n=1, cutoff=0.82)
+                if fuzzy:
+                    const_nos.add(_CONST_INDEX[fuzzy[0]])
+                    break
 
     # Candidates: token-score against the candidate index; prefer winners on ties.
     for raw in extracted.get("candidates", []):
