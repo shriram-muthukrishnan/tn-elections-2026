@@ -6,12 +6,14 @@ import os
 
 from database import engine, Base, SessionLocal
 from routers import constituencies, summary, parties, chat
+import stats
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
     with SessionLocal() as db:
         chat.warm_indexes(db)
+        stats.warm_stats(db)
     yield
 
 app = FastAPI(title="Tamil Nadu Elections 2026", version="1.0.0", lifespan=lifespan)

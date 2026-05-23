@@ -10,6 +10,7 @@ from openai import AzureOpenAI
 from database import get_db
 from models import Party, Constituency, Result, PartySummary
 from prompts import SYSTEM_PROMPT, USER_ENVELOPE, EXTRACTOR_SYSTEM_PROMPT
+import stats
 
 router = APIRouter(tags=["Chat"])
 log = logging.getLogger("chat")
@@ -349,7 +350,10 @@ def _fetch_party(db: Session, abbr: str) -> Optional[dict]:
     }
 
 def _build_context(db: Session, const_nos: set[int], parties: set[str]) -> dict:
-    ctx: dict = {"summary": _fetch_summary(db)}
+    ctx: dict = {
+        "summary": _fetch_summary(db),
+        "stats":   stats.get_stats(),
+    }
     if const_nos:
         rows = [_fetch_constituency(db, n) for n in list(const_nos)[:3]]
         ctx["constituencies"] = [r for r in rows if r is not None]

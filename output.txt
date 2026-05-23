@@ -1,0 +1,1644 @@
+REGIONS COUNT: 6
+DISTRICTS COUNT: 32
+
+REGIONS:
+[
+  {
+    "region": "South",
+    "total_seats": 58,
+    "party_stats": [
+      {
+        "party": "TVK",
+        "won": 26,
+        "contested": 58,
+        "strike_rate_pct": 44.8
+      },
+      {
+        "party": "DMK",
+        "won": 22,
+        "contested": 41,
+        "strike_rate_pct": 53.7
+      },
+      {
+        "party": "ADMK",
+        "won": 5,
+        "contested": 39,
+        "strike_rate_pct": 12.8
+      },
+      {
+        "party": "INC",
+        "won": 4,
+        "contested": 12,
+        "strike_rate_pct": 33.3
+      },
+      {
+        "party": "CPI(M)",
+        "won": 1,
+        "contested": 2,
+        "strike_rate_pct": 50.0
+      },
+      {
+        "party": "BJP",
+        "won": 0,
+        "contested": 15,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Bahujan Dravida Part",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Thakkam Katchi",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Rashtriya Samaj Dal ",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Thamizh Perarasu Kat",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Socialist Unity Cent",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Puratchi T",
+        "won": 0,
+        "contested": 32,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Desiya Makkal Sakthi",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Thamizhaka Padaippal",
+        "won": 0,
+        "contested": 9,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Aanaithinthiya Janan",
+        "won": 0,
+        "contested": 4,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Bharatha Makkal Katc",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "NTK",
+        "won": 0,
+        "contested": 58,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Our Mahathma Nationa",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Ahila India Dhayaga ",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "BSP",
+        "won": 0,
+        "contested": 21,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Indhu Dravida Makkal",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "New Generation Peopl",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Veerath Thiyagi Visw",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "CPI",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Naadaalum Makkal Kat",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamizhaga Vaazhvurim",
+        "won": 0,
+        "contested": 31,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Rashtriya Janata Dal",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Republican Party of ",
+        "won": 0,
+        "contested": 5,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "AMMK",
+        "won": 0,
+        "contested": 4,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Forward Bl",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Jananayaka",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamilaga Makkal Nala",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Puthiya Tamilagam",
+        "won": 0,
+        "contested": 33,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Ahimsa Socialist Par",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Vishwa Tamil Kazhaga",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Samaniya Makkal Nala",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Nam Naadu Nam Makkal",
+        "won": 0,
+        "contested": 4,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Kamarajar Deseeya Co",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Party for the Rights",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Samata Party",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Naam Indiar Party",
+        "won": 0,
+        "contested": 20,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Puthiya Makkal Tamil",
+        "won": 0,
+        "contested": 12,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Communist Party of I",
+        "won": 0,
+        "contested": 10,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Indian Christian Fro",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "VCK",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "DMDK",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Makkal Nalvaazhvuk K",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anna Puratchi Thalai",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Viro Ke Vir Indian P",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "IND",
+        "won": 0,
+        "contested": 57,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Ezhuchi Tamilargal M",
+        "won": 0,
+        "contested": 4,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Desa Makkal Munnetra",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      }
+    ]
+  },
+  {
+    "region": "Kongu",
+    "total_seats": 57,
+    "party_stats": [
+      {
+        "party": "TVK",
+        "won": 27,
+        "contested": 56,
+        "strike_rate_pct": 48.2
+      },
+      {
+        "party": "ADMK",
+        "won": 19,
+        "contested": 44,
+        "strike_rate_pct": 43.2
+      },
+      {
+        "party": "DMK",
+        "won": 8,
+        "contested": 43,
+        "strike_rate_pct": 18.6
+      },
+      {
+        "party": "CPI",
+        "won": 1,
+        "contested": 3,
+        "strike_rate_pct": 33.3
+      },
+      {
+        "party": "PMK",
+        "won": 1,
+        "contested": 4,
+        "strike_rate_pct": 25.0
+      },
+      {
+        "party": "BJP",
+        "won": 1,
+        "contested": 8,
+        "strike_rate_pct": 12.5
+      },
+      {
+        "party": "Thakkam Katchi",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Rashtriya Samaj Dal ",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Vada Tamil Nadu Munn",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Ganasangam Party of ",
+        "won": 0,
+        "contested": 10,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Namathu Kongu Munnet",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Puratchi T",
+        "won": 0,
+        "contested": 11,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Desiya Makkal Sakthi",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamil Nadu Ilangyar ",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Aanaithinthiya Janan",
+        "won": 0,
+        "contested": 5,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Thamizhaka Padaippal",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "NTK",
+        "won": 0,
+        "contested": 57,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamilar Makkal Katch",
+        "won": 0,
+        "contested": 8,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "BSP",
+        "won": 0,
+        "contested": 27,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Indhu Dravida Makkal",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "New Generation Peopl",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Veerath Thiyagi Visw",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Naadaalum Makkal Kat",
+        "won": 0,
+        "contested": 7,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamizhaga Vaazhvurim",
+        "won": 0,
+        "contested": 40,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anna Makkal Katchi",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Periyar Ambedkar Mun",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "INC",
+        "won": 0,
+        "contested": 8,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Republican Party of ",
+        "won": 0,
+        "contested": 4,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "AMMK",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Makkal Munnetra Katc",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Forward Bl",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamilaga Makkal Nala",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Puthiya Tamilagam",
+        "won": 0,
+        "contested": 4,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Vishwa Tamil Kazhaga",
+        "won": 0,
+        "contested": 8,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Ahimsa Socialist Par",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Samaniya Makkal Nala",
+        "won": 0,
+        "contested": 10,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Youth Deve",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Party for the Rights",
+        "won": 0,
+        "contested": 7,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Communist Party of I",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamizhaga Murpokku M",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "DMDK",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Bharat Jan Chikitsa ",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anna Puratchi Thalai",
+        "won": 0,
+        "contested": 7,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "IND",
+        "won": 0,
+        "contested": 56,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anaithinthiya Anna D",
+        "won": 0,
+        "contested": 5,
+        "strike_rate_pct": 0.0
+      }
+    ]
+  },
+  {
+    "region": "Chennai",
+    "total_seats": 37,
+    "party_stats": [
+      {
+        "party": "TVK",
+        "won": 32,
+        "contested": 37,
+        "strike_rate_pct": 86.5
+      },
+      {
+        "party": "ADMK",
+        "won": 3,
+        "contested": 29,
+        "strike_rate_pct": 10.3
+      },
+      {
+        "party": "DMK",
+        "won": 2,
+        "contested": 29,
+        "strike_rate_pct": 6.9
+      },
+      {
+        "party": "BJP",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Makkal Murasu Katchi",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "India Suyarajya Part",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Thakkam Katchi",
+        "won": 0,
+        "contested": 6,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamil Telugu Nationa",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "CPI(M)",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Vanchit Bahujan Aagh",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Socialist Unity Cent",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Thamizhaga Dravidar ",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Puratchi T",
+        "won": 0,
+        "contested": 11,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Proutist Sarva Samaj",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Jebamani Janata",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Thamizhaga Munnetra ",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Desiya Makkal Sakthi",
+        "won": 0,
+        "contested": 5,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Aanaithinthiya Janan",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Democratic National ",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "NTK",
+        "won": 0,
+        "contested": 37,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Mannin Maithargal Ka",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "BSP",
+        "won": 0,
+        "contested": 23,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Indhu Dravida Makkal",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamilnadu Mahatma Ga",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Veerath Thiyagi Visw",
+        "won": 0,
+        "contested": 7,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Naadaalum Makkal Kat",
+        "won": 0,
+        "contested": 4,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamizhaga Vaazhvurim",
+        "won": 0,
+        "contested": 26,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "National Maha Sabha ",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anti Corruption Dyna",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Dravida Jananayaga M",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "PMK",
+        "won": 0,
+        "contested": 4,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "INC",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Nationalist Janshakt",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Republican Party of ",
+        "won": 0,
+        "contested": 6,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "AMMK",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Jananayaka",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Makkalatchi Katchi",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Puthiya Tamilagam",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Samaniya Makkal Nala",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anna MGR Dravida Mak",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Samata Party",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Naam Indiar Party",
+        "won": 0,
+        "contested": 11,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Communist Party of I",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamizhaga Murpokku M",
+        "won": 0,
+        "contested": 4,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "VCK",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Makkal Nalvaazhvuk K",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anna Puratchi Thalai",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "DMDK",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "IND",
+        "won": 0,
+        "contested": 37,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anaithinthiya Anna D",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "MGR Makkal Katchi",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      }
+    ]
+  },
+  {
+    "region": "North",
+    "total_seats": 32,
+    "party_stats": [
+      {
+        "party": "ADMK",
+        "won": 11,
+        "contested": 24,
+        "strike_rate_pct": 45.8
+      },
+      {
+        "party": "TVK",
+        "won": 10,
+        "contested": 32,
+        "strike_rate_pct": 31.2
+      },
+      {
+        "party": "DMK",
+        "won": 7,
+        "contested": 24,
+        "strike_rate_pct": 29.2
+      },
+      {
+        "party": "PMK",
+        "won": 2,
+        "contested": 5,
+        "strike_rate_pct": 40.0
+      },
+      {
+        "party": "IUML",
+        "won": 1,
+        "contested": 1,
+        "strike_rate_pct": 100.0
+      },
+      {
+        "party": "VCK",
+        "won": 1,
+        "contested": 3,
+        "strike_rate_pct": 33.3
+      },
+      {
+        "party": "BJP",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Thakkam Katchi",
+        "won": 0,
+        "contested": 6,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Makkal Nala Kazhagam",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Vanchit Bahujan Aagh",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamil Manila Murpokk",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Puratchi T",
+        "won": 0,
+        "contested": 8,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Makkal Arasial Katch",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "MAKKAL SAKTHI KATCHI",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Desiya Makkal Sakthi",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamil Nadu Ilangyar ",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Aanaithinthiya Janan",
+        "won": 0,
+        "contested": 13,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Thamizhaka Padaippal",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "NTK",
+        "won": 0,
+        "contested": 32,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "BSP",
+        "won": 0,
+        "contested": 20,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Indhu Dravida Makkal",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Veerath Thiyagi Visw",
+        "won": 0,
+        "contested": 10,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Naadaalum Makkal Kat",
+        "won": 0,
+        "contested": 4,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamizhaga Vaazhvurim",
+        "won": 0,
+        "contested": 27,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anna Makkal Katchi",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anti Corruption Dyna",
+        "won": 0,
+        "contested": 10,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "INC",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Republican Party of ",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "AMMK",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Indian National Leag",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Namadhu Makkal Katch",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Jananayaka",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Parivartan Rajniti P",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Puthiya Tamilagam",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Majlis-E-I",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Samaniya Makkal Nala",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Youth Deve",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Party for the Rights",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anna MGR Dravida Mak",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Naam Indiar Party",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Uzhavargal",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Makkal Sananayaga Ku",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "ALL PENSIONER'S PART",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "DMDK",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Viro Ke Vir Indian P",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "IND",
+        "won": 0,
+        "contested": 32,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Indhia Kudiarasu Kat",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anaithindia Samudaya",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      }
+    ]
+  },
+  {
+    "region": "Delta",
+    "total_seats": 31,
+    "party_stats": [
+      {
+        "party": "DMK",
+        "won": 13,
+        "contested": 23,
+        "strike_rate_pct": 56.5
+      },
+      {
+        "party": "ADMK",
+        "won": 6,
+        "contested": 21,
+        "strike_rate_pct": 28.6
+      },
+      {
+        "party": "TVK",
+        "won": 4,
+        "contested": 31,
+        "strike_rate_pct": 12.9
+      },
+      {
+        "party": "CPI(M)",
+        "won": 1,
+        "contested": 1,
+        "strike_rate_pct": 100.0
+      },
+      {
+        "party": "CPI",
+        "won": 1,
+        "contested": 1,
+        "strike_rate_pct": 100.0
+      },
+      {
+        "party": "IUML",
+        "won": 1,
+        "contested": 1,
+        "strike_rate_pct": 100.0
+      },
+      {
+        "party": "DMDK",
+        "won": 1,
+        "contested": 1,
+        "strike_rate_pct": 100.0
+      },
+      {
+        "party": "INC",
+        "won": 1,
+        "contested": 2,
+        "strike_rate_pct": 50.0
+      },
+      {
+        "party": "AMMK",
+        "won": 1,
+        "contested": 2,
+        "strike_rate_pct": 50.0
+      },
+      {
+        "party": "VCK",
+        "won": 1,
+        "contested": 2,
+        "strike_rate_pct": 50.0
+      },
+      {
+        "party": "PMK",
+        "won": 1,
+        "contested": 5,
+        "strike_rate_pct": 20.0
+      },
+      {
+        "party": "BJP",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Bahujan Dravida Part",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamil Telugu Nationa",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Rashtriya Samaj Dal ",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Thamizh Perarasu Kat",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Vada Tamil Nadu Munn",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Puratchi T",
+        "won": 0,
+        "contested": 9,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Desiya Makkal Sakthi",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Aanaithinthiya Janan",
+        "won": 0,
+        "contested": 5,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Thamizhaka Padaippal",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "NTK",
+        "won": 0,
+        "contested": 31,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Our Mahathma Nationa",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "BSP",
+        "won": 0,
+        "contested": 18,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Indhu Dravida Makkal",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Veerath Thiyagi Visw",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Naadaalum Makkal Kat",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamizhaga Vaazhvurim",
+        "won": 0,
+        "contested": 25,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anna Makkal Katchi",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anti Corruption Dyna",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Jananayaka",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamilaga Makkal Nala",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Thamizh Desiya Munne",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Puthiya Tamilagam",
+        "won": 0,
+        "contested": 8,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Samaniya Makkal Nala",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Youth Deve",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Party for the Rights",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Communist Party of I",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anna Puratchi Thalai",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anaithinthiya Anna D",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "IND",
+        "won": 0,
+        "contested": 31,
+        "strike_rate_pct": 0.0
+      }
+    ]
+  },
+  {
+    "region": "Central",
+    "total_seats": 19,
+    "party_stats": [
+      {
+        "party": "TVK",
+        "won": 9,
+        "contested": 19,
+        "strike_rate_pct": 47.4
+      },
+      {
+        "party": "DMK",
+        "won": 7,
+        "contested": 16,
+        "strike_rate_pct": 43.8
+      },
+      {
+        "party": "ADMK",
+        "won": 3,
+        "contested": 15,
+        "strike_rate_pct": 20.0
+      },
+      {
+        "party": "BJP",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "CPI(M)",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Rashtriya Samaj Dal ",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Ganasangam Party of ",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Puratchi T",
+        "won": 0,
+        "contested": 7,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Thamizhaka Padaippal",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "NTK",
+        "won": 0,
+        "contested": 19,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "BSP",
+        "won": 0,
+        "contested": 10,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Veerath Thiyagi Visw",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Naadaalum Makkal Kat",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamizhaga Vaazhvurim",
+        "won": 0,
+        "contested": 15,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "National Maha Sabha ",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anti Corruption Dyna",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "INC",
+        "won": 0,
+        "contested": 2,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "AMMK",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Akila Inthiya Makkal",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "All India Jananayaka",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Namadhu Makkal Katch",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Tamilaga Makkal Nala",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Puthiya Tamilagam",
+        "won": 0,
+        "contested": 11,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Samaniya Makkal Nala",
+        "won": 0,
+        "contested": 10,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Party for the Rights",
+        "won": 0,
+        "contested": 3,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Vidial Valarchi Pera",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Communist Party of I",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Anna Puratchi Thalai",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "IND",
+        "won": 0,
+        "contested": 19,
+        "strike_rate_pct": 0.0
+      },
+      {
+        "party": "Viduthalai Kalam Kat",
+        "won": 0,
+        "contested": 1,
+        "strike_rate_pct": 0.0
+      }
+    ]
+  }
+]

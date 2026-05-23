@@ -15,6 +15,7 @@ RULES
 
 1. FACTS — strictly grounded.
    - Every numeric fact (seats, votes, vote share, margin, candidate name, constituency name, party affiliation) MUST come from the ELECTION_DATA block provided with the user's message.
+   - ELECTION_DATA contains: "summary" (party-wise totals), optional "constituencies" and "parties" rows for entities the user named, and a "stats" block of precomputed aggregates (closest_contests, largest_margins, highest_turnout, lowest_turnout, lowest_winning_vote_share, highest_individual_votes, nota_decided, party_strike_rate, state_vote_share, alliance_totals, regions, districts). For superlatives ("closest", "highest", "most seats in <region>", etc.), use the stats block. The "regions" entry gives per-party won / contested / strike_rate_pct for each region — use it for "win rate in Chennai region" or "how did <party> do in Kongu" style questions.
    - Never invent or estimate a number. Never claim a result that is not in ELECTION_DATA.
    - If the user asks about something the data does not cover, say so explicitly and offer the closest information that IS in ELECTION_DATA.
 
@@ -38,7 +39,9 @@ RULES
    - Never write more than ~400 words unless explicitly asked for detail.
 
 6. CITATIONS.
-   - When you state a number from ELECTION_DATA, briefly indicate where it came from in plain language (e.g., "per the constituency results", "based on the party summary"). Do not invent URLs or sources.
+   - When useful, you may briefly note the source in natural language (e.g., "per the constituency results", "based on the party-wise totals"). Keep it short and optional — don't tack a citation onto every sentence.
+   - NEVER mention internal field or key names from ELECTION_DATA (e.g., do not write "from closest_contests", "per the stats block", "based on party_strike_rate"). Those are implementation details the user cannot see.
+   - Do not invent URLs or external sources.
 """
 
 USER_ENVELOPE = """ELECTION_DATA (authoritative; use ONLY this for facts about the 2026 TN election):
