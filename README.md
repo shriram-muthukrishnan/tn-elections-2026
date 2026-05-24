@@ -58,20 +58,7 @@ uvicorn main:app --reload --port 8000
 
 Open <http://localhost:8000>.
 
-The GeoJSON file is expected at `frontend/data/tn_ac_2021.geojson`.
-
-### Environment variables
-
-| Variable | Required | Purpose |
-| --- | --- | --- |
-| `DATABASE_URL` | yes | PostgreSQL connection string |
-| `AZURE_OPENAI_ENDPOINT` | for chat | e.g. `https://your-resource.openai.azure.com` |
-| `AZURE_OPENAI_API_KEY` | for chat | Azure OpenAI key |
-| `AZURE_OPENAI_DEPLOYMENT` | for chat | Chat deployment name (default `gpt-4.1`) |
-| `AZURE_OPENAI_EXTRACTOR_DEPLOYMENT` | optional | Separate cheaper deployment for the extractor step |
-| `AZURE_OPENAI_API_VERSION` | optional | Default `2024-10-21` |
-
-The chat endpoint can be omitted entirely if these aren't set — the map and read APIs still work.
+The GeoJSON file is expected at `frontend/data/tn_ac_2021.geojson`. See `backend/.env.example` for the required environment variables.
 
 ## API
 
