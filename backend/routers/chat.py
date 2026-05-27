@@ -9,9 +9,10 @@ from sqlalchemy.orm import Session, joinedload
 from openai import AzureOpenAI
 
 from database import get_db
-from models import Party, Constituency, Result, PartySummary
+from models import Party, Constituency, Result, PartySummary, CandidateProfile
 from prompts import SYSTEM_PROMPT, USER_ENVELOPE, EXTRACTOR_SYSTEM_PROMPT
 import stats
+from candidate_query import TOOL_SPEC as CANDIDATE_QUERY_TOOL, run_query as run_candidate_query
 
 router = APIRouter(tags=["Chat"])
 log = logging.getLogger("chat")
@@ -404,6 +405,44 @@ def _resolve_extracted(extracted: dict) -> tuple[set[int], set[str]]:
 # Filters out long-tail fringe parties to save tokens and noise.
 _SUMMARY_CONTESTED_THRESHOLD = 50
 
+def _fmt_inr(n: Optional[int]) -> Optional[str]:
+    """Indian-format rupee string: 12,34,56,789 -> '₹12.35 crore'."""
+    if n is None:
+        return None
+    try:
+        n = int(n)
+    except (TypeError, ValueError):
+        return None
+    sign = "-" if n < 0 else ""
+    n = abs(n)
+    if n >= 10_000_000:
+        return f"{sign}₹{n / 10_000_000:.2f} crore"
+    if n >= 100_000:
+        return f"{sign}₹{n / 100_000:.2f} lakh"
+    if n >= 1_000:
+        return f"{sign}₹{n / 1_000:.1f} thousand"
+    return f"{sign}₹{n}"
+
+def _profile_dict(p: Optional[CandidateProfile]) -> Optional[dict]:
+    if p is None:
+        return None
+    return {
+        "age":               p.age,
+        "gender":            p.gender,
+        "education":         p.education,
+        "profession_self":   p.profession_self,
+        "profession_spouse": p.profession_spouse,
+        "criminal_cases":    p.criminal_cases or 0,
+        "criminal_details":  p.criminal_details,
+        "total_assets":      p.total_assets,
+        "total_liabilities": p.total_liabilities,
+        "net_worth":         p.net_worth,
+        "total_assets_display":      _fmt_inr(p.total_assets),
+        "total_liabilities_display": _fmt_inr(p.total_liabilities),
+        "net_worth_display":         _fmt_inr(p.net_worth),
+        "source_url":        p.source_url,
+    }
+
 def _fetch_summary(db: Session) -> list[dict]:
     rows = (
         db.query(PartySummary)
@@ -438,7 +477,7 @@ def _fetch_constituency(db: Session, const_no: int) -> Optional[dict]:
         return None
     results = (
         db.query(Result)
-        .options(joinedload(Result.party))
+        .options(joinedload(Result.party), joinedload(Result.profile))
         .filter(Result.constituency_id == c.id)
         .order_by(Result.evm_votes.desc())
         .all()
@@ -460,6 +499,7 @@ def _fetch_constituency(db: Session, const_no: int) -> Optional[dict]:
             "votes":      (r.evm_votes or 0) + (r.postal_votes or 0),
             "vote_share": float(r.vote_share_pct) if r.vote_share_pct is not None else None,
             "is_winner":  bool(r.is_winner),
+            "profile":    _profile_dict(r.profile),
         } for r in results],
     }
 
@@ -548,19 +588,79 @@ def chat(req: ChatRequest, request: Request, db: Session = Depends(get_db)):
             messages    = messages,
             temperature = 0.3,
             max_tokens  = 600,
+            tools       = [CANDIDATE_QUERY_TOOL],
+            tool_choice = "auto",
         )
     except Exception as e:
         log.exception("Azure OpenAI call failed")
         raise HTTPException(502, f"Upstream model error: {type(e).__name__}: {e}")
 
+    # Tool-call loop: model may call query_candidates up to 3 times per turn.
+    # Cap exists so a runaway tool-call doesn't blow latency/cost.
+    tool_calls_used: list[dict] = []
+    for _ in range(3):
+        choice = resp.choices[0]
+        tool_calls = choice.message.tool_calls or []
+        if not tool_calls:
+            break
+        # Append assistant turn carrying the tool_calls so the follow-up call
+        # sees the conversation in valid OpenAI tool-call format.
+        messages.append({
+            "role": "assistant",
+            "content": choice.message.content,
+            "tool_calls": [
+                {
+                    "id":   tc.id,
+                    "type": "function",
+                    "function": {"name": tc.function.name, "arguments": tc.function.arguments},
+                }
+                for tc in tool_calls
+            ],
+        })
+        for tc in tool_calls:
+            try:
+                args = json.loads(tc.function.arguments or "{}")
+            except Exception:
+                args = {}
+            if tc.function.name == "query_candidates":
+                try:
+                    result = run_candidate_query(db, args)
+                except Exception as e:
+                    log.exception("query_candidates failed")
+                    result = {"error": f"{type(e).__name__}: {e}"}
+                tool_calls_used.append({"args": args, "result_count": result.get("total_matching")})
+                messages.append({
+                    "role": "tool",
+                    "tool_call_id": tc.id,
+                    "content": json.dumps(result, ensure_ascii=False),
+                })
+            else:
+                messages.append({
+                    "role": "tool",
+                    "tool_call_id": tc.id,
+                    "content": json.dumps({"error": f"unknown tool {tc.function.name}"}),
+                })
+        try:
+            resp = _azure_client().chat.completions.create(
+                model       = DEPLOYMENT,
+                messages    = messages,
+                temperature = 0.3,
+                max_tokens  = 600,
+                tools       = [CANDIDATE_QUERY_TOOL],
+                tool_choice = "auto",
+            )
+        except Exception as e:
+            log.exception("Azure OpenAI follow-up call failed")
+            raise HTTPException(502, f"Upstream model error: {type(e).__name__}: {e}")
+
     reply = resp.choices[0].message.content or ""
     usage = resp.usage.model_dump() if resp.usage else {}
-    log.info("chat ok ip=%s tokens=%s entities=%s/%s",
-             ip, usage.get("total_tokens"), len(const_nos), len(parties))
+    log.info("chat ok ip=%s tokens=%s entities=%s/%s tool_calls=%d",
+             ip, usage.get("total_tokens"), len(const_nos), len(parties), len(tool_calls_used))
 
     return ChatResponse(
         reply        = reply,
-        context_used = context,
+        context_used = {**context, "tool_calls": tool_calls_used} if tool_calls_used else context,
         model        = DEPLOYMENT,
         usage        = usage,
     )

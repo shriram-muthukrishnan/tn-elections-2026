@@ -18,7 +18,7 @@ from typing import Optional
 from sqlalchemy import func
 from sqlalchemy.orm import Session, joinedload
 
-from models import Party, Constituency, Result, PartySummary
+from models import Party, Constituency, Result, PartySummary, CandidateProfile
 
 log = logging.getLogger("stats")
 
@@ -118,6 +118,132 @@ def _region_for(district: Optional[str]) -> Optional[str]:
 def get_stats() -> dict:
     """Return the cached stats dict (empty if warm_stats has not run)."""
     return _STATS or {}
+
+
+def _fmt_inr(n: Optional[int]) -> Optional[str]:
+    """Indian-format rupee string for display in the chat context."""
+    if n is None:
+        return None
+    try:
+        n = int(n)
+    except (TypeError, ValueError):
+        return None
+    sign = "-" if n < 0 else ""
+    n = abs(n)
+    if n >= 10_000_000:
+        return f"{sign}₹{n / 10_000_000:.2f} crore"
+    if n >= 100_000:
+        return f"{sign}₹{n / 100_000:.2f} lakh"
+    if n >= 1_000:
+        return f"{sign}₹{n / 1_000:.1f} thousand"
+    return f"{sign}₹{n}"
+
+
+def _compute_candidate_profile_stats(db: Session) -> dict:
+    """State-wide aggregates from candidate_profiles. Joined to results when
+    available (linked rows) so we can attribute by party / winner; otherwise
+    counted in coverage and gender totals only.
+
+    Kept intentionally minimal — only the questions that are asked constantly.
+    Anything more specific (per-party crosstabs, age-bucketed strike rates,
+    "richest BJP candidate in Kongu") goes through the query_candidates tool.
+    """
+    # Coverage: 3549 profiles total, ~3452 linked to a result row.
+    total = db.query(func.count(CandidateProfile.id)).scalar() or 0
+    linked = db.query(func.count(CandidateProfile.id)).filter(
+        CandidateProfile.result_id.isnot(None)
+    ).scalar() or 0
+
+    # Gender split — from all 3549 profiles (gender is reliable regardless of linking).
+    gender_rows = (
+        db.query(CandidateProfile.gender, func.count(CandidateProfile.id))
+        .group_by(CandidateProfile.gender)
+        .all()
+    )
+    gender_counts = {g or "Unknown": n for g, n in gender_rows}
+    male = gender_counts.get("Male", 0)
+    female = gender_counts.get("Female", 0)
+    gender_total = male + female
+
+    # Linked-only rows (need result + party + constituency for the rest).
+    linked_rows = (
+        db.query(CandidateProfile, Result, Constituency, Party)
+        .join(Result, Result.id == CandidateProfile.result_id)
+        .join(Constituency, Constituency.id == Result.constituency_id)
+        .outerjoin(Party, Party.id == Result.party_id)
+        .all()
+    )
+
+    def label(p: CandidateProfile, r: Result, c: Constituency, party: Optional[Party]) -> dict:
+        return {
+            "name":         r.candidate_name,
+            "constituency": c.name,
+            "const_no":     c.const_no,
+            "party":        party.abbreviation if party else ("IND" if r.is_independent else None),
+            "is_winner":    bool(r.is_winner),
+            "net_worth":    p.net_worth,
+            "net_worth_display": _fmt_inr(p.net_worth),
+            "age":          p.age,
+            "criminal_cases": p.criminal_cases or 0,
+        }
+
+    # Criminal-case counts (overall + among winners).
+    with_cases = [t for t in linked_rows if (t[0].criminal_cases or 0) > 0]
+    winners_with_cases = [t for t in with_cases if t[1].is_winner]
+    total_cases = sum((t[0].criminal_cases or 0) for t in linked_rows)
+
+    # Wealth: top-10 richest overall, top-5 richest winners, top-5 poorest winners.
+    with_nw = [t for t in linked_rows if t[0].net_worth is not None]
+    top_richest = sorted(with_nw, key=lambda t: -(t[0].net_worth or 0))[:10]
+    winner_nw = [t for t in with_nw if t[1].is_winner]
+    top_richest_winners = sorted(winner_nw, key=lambda t: -(t[0].net_worth or 0))[:5]
+    poorest_winners = sorted(winner_nw, key=lambda t: (t[0].net_worth or 0))[:5]
+    crorepati_total = sum(1 for t in with_nw if (t[0].net_worth or 0) >= 10_000_000)
+    crorepati_winners = sum(1 for t in winner_nw if (t[0].net_worth or 0) >= 10_000_000)
+
+    # Most criminal cases — top 10 by raw count.
+    top_criminal = sorted(
+        [t for t in with_cases],
+        key=lambda t: -(t[0].criminal_cases or 0),
+    )[:10]
+
+    # Women winners — direct list (small enough to ship in full).
+    women_winners = [
+        label(p, r, c, party)
+        for p, r, c, party in linked_rows
+        if r.is_winner and (p.gender or "").lower() == "female"
+    ]
+    women_winners.sort(key=lambda x: x["const_no"] or 0)
+
+    return {
+        "coverage": {
+            "total_profiles": total,
+            "linked_to_result": linked,
+            "unlinked": total - linked,
+            "note": "Some candidates from the results table do not have a profile (~3% unmatched). When a specific candidate's profile is not present, say so rather than guessing.",
+        },
+        "gender": {
+            "male": male,
+            "female": female,
+            "women_pct_of_profiles": round(female * 100.0 / gender_total, 2) if gender_total else 0,
+            "women_winners_count": len(women_winners),
+            "women_winners": women_winners,
+        },
+        "criminal": {
+            "candidates_with_cases": len(with_cases),
+            "winners_with_cases": len(winners_with_cases),
+            "winners_with_cases_pct": round(len(winners_with_cases) * 100.0 / max(1, sum(1 for t in linked_rows if t[1].is_winner)), 2),
+            "total_cases_across_all_candidates": total_cases,
+            "top_by_case_count": [label(p, r, c, party) for p, r, c, party in top_criminal],
+        },
+        "wealth": {
+            "crorepati_candidates": crorepati_total,
+            "crorepati_winners": crorepati_winners,
+            "top_richest_candidates": [label(p, r, c, party) for p, r, c, party in top_richest],
+            "top_richest_winners": [label(p, r, c, party) for p, r, c, party in top_richest_winners],
+            "poorest_winners": [label(p, r, c, party) for p, r, c, party in poorest_winners],
+        },
+    }
 
 
 def warm_stats(db: Session) -> None:
@@ -394,6 +520,12 @@ def warm_stats(db: Session) -> None:
         ],
         key=lambda x: (x.get("region") or "ZZ", -x["total_seats"]),
     )
+
+    # --- Candidate-profile state-wide aggregates -----------------------------
+    # Cheap, high-traffic answers: gender split, criminal-case counts, wealth
+    # extremes. Anything more specific (filter by party + region + age range)
+    # should go through the query_candidates tool, not be pre-computed here.
+    s["candidate_profiles"] = _compute_candidate_profile_stats(db)
 
     _STATS = s
     log.info(

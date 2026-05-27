@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Numeric, Boolean, ForeignKey, BigInteger
+from sqlalchemy import Column, Integer, String, Text, Numeric, Boolean, ForeignKey, BigInteger, DateTime
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -47,6 +47,7 @@ class Result(Base):
     is_winner       = Column(Boolean, default=False)
     constituency    = relationship("Constituency", back_populates="results")
     party           = relationship("Party", back_populates="results")
+    profile         = relationship("CandidateProfile", back_populates="result", uselist=False)
 
 class PartySummary(Base):
     __tablename__ = "party_summary"
@@ -57,3 +58,24 @@ class PartySummary(Base):
     overall_vote_share       = Column(Numeric(6, 3))
     constituencies_contested = Column(Integer, default=0)
     party                    = relationship("Party", back_populates="summary")
+
+class CandidateProfile(Base):
+    __tablename__ = "candidate_profiles"
+    id                   = Column(Integer, primary_key=True)
+    result_id            = Column(Integer, ForeignKey("results.id"))
+    myneta_id            = Column(Integer)
+    age                  = Column(Integer)
+    gender               = Column(String)
+    education            = Column(String)
+    profession_self      = Column(String)
+    profession_spouse    = Column(String)
+    criminal_cases       = Column(Integer, default=0)
+    criminal_details     = Column(Text)
+    total_assets         = Column(BigInteger)
+    total_liabilities    = Column(BigInteger)
+    net_worth            = Column(BigInteger)
+    source_url           = Column(String)
+    scraped_at           = Column(DateTime(timezone=True))
+    candidate_name_norm  = Column(String)
+    constituency         = Column(String)
+    result               = relationship("Result", back_populates="profile")
